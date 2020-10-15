@@ -295,8 +295,8 @@ def gameloop():
                 f.write(str(gameloop.hiscore))
                 gameWindow.blit(game_over_i,(0, 0))
                 pygame.draw.rect(gameWindow, blue, [30, 35, 250, 60])
-                pygame.draw.rect(gameWindow, green, [630, 35, 250, 60])
-                text_screen("Score: " + str(gameloop.score) + " " *45 + "Hiscore: "+str(gameloop.hiscore), white, 50, 50)
+                pygame.draw.rect(gameWindow, green, [582, 35, 300, 60])
+                text_screen("Score: " + str(gameloop.score) + " " *40 + "Hiscore: "+str(gameloop.hiscore), white, 50, 50)
                 text_screen(user_id.uname, white, 200, 150)
                 text_screen("Y o u r ", red, 500, 190)
 
