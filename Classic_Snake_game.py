@@ -37,155 +37,241 @@ play_game_i = pygame.image.load("Welcome.jpg")
 play_game_i = pygame.transform.scale(play_game_i, (screen_width, screen_height)).convert_alpha()
 game_over_i = pygame.image.load("game_over.jpg")
 game_over_i = pygame.transform.scale(game_over_i, (screen_width, screen_height)).convert_alpha()
-u_name_id = pygame.image.load("user_name.jpg")
-u_name_id = pygame.transform.scale(u_name_id, (screen_width, screen_height)).convert_alpha()
+p_name_id = pygame.image.load("player_name.jpg")
+p_name_id = pygame.transform.scale(p_name_id, (screen_width, screen_height)).convert_alpha()
 
 # Game Title
-pygame.display.set_caption("SNAKE V2.1 by Praveen Singh Chauhan")
+pygame.display.set_caption("CLASSIC SNAKE GAME V4.0 by Praveen Singh Chauhan")
 pygame.display.update()
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 55)
 
 
-def text_screen(text, color, x, y):
+def text_screen(text, color, x, y):  # every time when we want to put text in screen we use this
     screen_text = font.render(text, True, color)
     gameWindow.blit(screen_text, [x,y])
 
 
-def plot_snake(gameWindow, color, snk_list, snake_size):
-    for x,y in snk_list:
+def plot_snake(gameWindow, color, snk_list, snake_size):  # snake
+    for x, y in snk_list:
         pygame.draw.rect(gameWindow, color, [x, y, snake_size, snake_size])
 
 
-def user_id():
-    u_confirm = False
+def player_id():   # asking player name and process for rest game
 
-    if os.path.exists("user_id.txt"):
-        os.remove("user_id.txt")
+    # local variables
+    p_confirm = False
+    name_exced = False
+    blank_name = False
+    space_count = 0
 
-    while not u_confirm == True:
-        if (not os.path.exists("user_id.txt")):
-            with open("user_id.txt", "w") as f:
-                f.write(" ")
+    if (os.path.exists("player_id.txt")):  # resetting player file to blank
+        with open("player_id.txt", "w") as f:
+            f.write("")
 
-        with open("user_id.txt", "r") as f:
-            user_name = f.read()
-            u_name = str(user_name).upper()
-            gameWindow.blit(u_name_id, (0, 0))
-            # text_screen("Welcome  '", red, 70, 310)
-            text_screen("'"+str(u_name) + "'", black, 100, 310)
-            user_id.uname = u_name
+    while not p_confirm == True:  # if press Enter key it will over
+        if (not os.path.exists("player_id.txt")):  # if Player file not exist it will make new one
+            with open("player_id.txt", "w") as f:
+                f.write("")
+        with open("player_id.txt", "r") as f:  # reading file and storing in a variable
+            player_name = f.read()
+            # player name process here  as player enters his/her name
+            p_name = str(player_name).upper()
+            gameWindow.blit(p_name_id, (0, 0))
+            str(p_name).replace("  ", " ")
+            text_screen("[" + str(p_name) + "] " + str(len(player_name)), black, 100, 310)
+            player_id.pname = p_name
 
-            for event in pygame.event.get():
+            # spaces or blank name not allowed and its messages
+            if space_count > 1:
+                text_screen("Double Spaces not valid, Please Enter Again", red, 20, 500)
+                space_count = 0
+            if blank_name == True:
+                text_screen("Empby Name is not valid, Enter Your Name ", red, 20, 500)
+            if name_exced == True:
+                text_screen("Enter Your Name Again", aqua, 50, 250)
+            else:
+                text_screen("Please Enter Your Name", aqua, 50, 250)
+            if int(len(p_name)) > 21:
+                text_screen("Name has to be less than 21 characters", red, 20, 500)
+            player_id.p_n_len = int(len(p_name))
 
-                if event.type == pygame.QUIT:
+
+            for event in pygame.event.get():  # open pygame events and key press identify
+
+                if event.type == pygame.QUIT:  # if click on check box to quit
                     quit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                if event.type == pygame.KEYDOWN:  # if any key press it will start event
+                    if event.key == pygame.K_ESCAPE: # if esc key pressed
                         quit()
+                    # from a to z or 0 to 9 , if any key pressed it will acknoledge and return its value as player name
                     if event.key == pygame.K_a:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'a')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'a')
                     if event.key == pygame.K_b:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'b')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'b')
                     if event.key == pygame.K_c:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'c')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'c')
                     if event.key == pygame.K_d:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'd')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'd')
                     if event.key == pygame.K_e:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'e')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'e')
                     if event.key == pygame.K_f:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'f')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'f')
                     if event.key == pygame.K_g:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'g')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'g')
                     if event.key == pygame.K_h:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'h')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'h')
                     if event.key == pygame.K_i:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'i')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'i')
                     if event.key == pygame.K_j:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'j')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'j')
                     if event.key == pygame.K_k:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'k')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'k')
                     if event.key == pygame.K_l:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'l')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'l')
                     if event.key == pygame.K_m:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'm')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'm')
                     if event.key == pygame.K_n:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'n')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'n')
                     if event.key == pygame.K_o:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'o')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'o')
                     if event.key == pygame.K_p:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'p')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'p')
                     if event.key == pygame.K_q:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'q')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'q')
                     if event.key == pygame.K_r:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'r')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'r')
                     if event.key == pygame.K_s:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 's')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 's')
                     if event.key == pygame.K_t:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 't')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 't')
                     if event.key == pygame.K_u:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'u')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'u')
                     if event.key == pygame.K_v:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'v')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'v')
                     if event.key == pygame.K_w:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'w')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'w')
                     if event.key == pygame.K_x:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'x')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'x')
                     if event.key == pygame.K_y:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'y')
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'y')
                     if event.key == pygame.K_z:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + 'z')
-                    if event.key == pygame.K_SPACE:
-                        with open("user_id.txt", "w") as f:
-                            f.write(str(u_name) + ' ')
-                    if event.key == pygame.K_RETURN:
-                        welcome()
-                    if event.key == pygame.K_BACKSPACE:
-                        f.close()
-                        if os.path.exists("user_id.txt"):
-                            os.remove("user_id.txt")
-                        if (not os.path.exists("user_id.txt")):
-                            with open("user_id.txt", "w") as f:
-                                f.write(" ")
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + 'z')
+                    if event.key == pygame.K_1 or event.key == pygame.K_KP1:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '1')
+                    if event.key == pygame.K_2 or event.key == pygame.K_KP2:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '2')
+                    if event.key == pygame.K_3 or event.key == pygame.K_KP3:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '3')
+                    if event.key == pygame.K_4 or event.key == pygame.K_KP4:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '4')
+                    if event.key == pygame.K_5 or event.key == pygame.K_KP5:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '5')
+                    if event.key == pygame.K_6 or event.key == pygame.K_KP6:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '6')
+                    if event.key == pygame.K_7 or event.key == pygame.K_KP7:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '7')
+                    if event.key == pygame.K_8 or event.key == pygame.K_KP8:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '8')
+                    if event.key == pygame.K_9 or event.key == pygame.K_KP9:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '9')
+                    if event.key == pygame.K_0 or event.key == pygame.K_KP0:
+                        with open("player_id.txt", "w") as f:
+                            f.write(str(p_name) + '0')
 
+                    if event.key == pygame.K_SPACE:  # if space bar pressed , it handle space bar action
+                        space_count += 1
+                        with open("player_id.txt", "w") as f:
+                            if str(p_name) == " ":
+                                space_count += 1
+                            if space_count ==1:
+                                space_count = 0
+                                f.write(str(p_name) + ' ')
+                            if space_count > 1:
+                                space_count += 1
+
+                    if event.key == pygame.K_RETURN: # when enter key pressed
+                        if int(len(p_name)) < 5:
+                            name_exced = True
+                            if os.path.exists("player_id.txt"):
+                                with open("player_id.txt", "w") as f:
+                                    f.write("")
+                        if str(p_name) == "" or str(p_name) == " " or str(p_name) == "  "  or str(p_name) == "    ":
+                            blank_name = True
+                        else:
+                            welcome()
+
+                    if event.key == pygame.K_BACKSPACE: # if backspace pressed it will handle that process
+                        if os.path.exists("player_id.txt"):
+                            with open("player_id.txt", "w") as f:
+                                f.write("")
+
+                    if int(len(p_name)) >= 22: # if player name is more than 23 character long , it checks here
+                        name_exced = True
+                        if os.path.exists("player_id.txt"):
+                            with open("player_id.txt", "w") as f:
+                                f.write("")
+
+            # file close , and update display and clock set to 60
             f.close()
             pygame.display.update()
             clock.tick(60)
 
 
-def gamemode():
+def gamemode():  # it lets player to play game in various mode (basically three mode)
+    # variable
     exit_game = False
+    n_width = 500
 
-    gameWindow.blit(g_mode, (0, 0))
-    text_screen(user_id.uname, green,300, 500)
+    gameWindow.blit(g_mode, (0, 0)) # game mode or play mode screen window
 
-    while not exit_game:
+    # various checking to get right position of player name in game window
+    if int(player_id.p_n_len) < 9:
+        n_width = 500- (int(player_id.p_n_len))+80
+    elif int(player_id.p_n_len) < 15 and int(player_id.p_n_len) > 9:
+        n_width = 500- (int(player_id.p_n_len))+50
+    elif int(player_id.p_n_len) > 15 and int(player_id.p_n_len) < 22:
+        n_width = 500 - (int(player_id.p_n_len) * 6)
+    text_screen(player_id.pname, green, n_width, 480)
+    text_screen("P l a y e r ", white,580, 420)
+
+    while not exit_game:  # loop to get right mode and exit
+        # event call in
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.mixer.music.load('wrong-answer.mp3')
@@ -193,33 +279,22 @@ def gamemode():
                 exit_game = True
                 quit()
 
+            # mode selection for speed and fps and send player to play the game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.mixer.music.load('wrong-answer.mp3')
                     pygame.mixer.music.play()
                     exit_game = True
                     quit()
-                if event.key == pygame.K_KP1:
+                if event.key == pygame.K_KP1 or event.key == pygame.K_1:
                     gamemode.fps = 90
                     gamemode.velocity = 2
                     gameloop()
-                elif event.key == pygame.K_KP2:
+                elif event.key == pygame.K_KP2 or event.key == pygame.K_2:
                     gamemode.fps = 90
-                    gamemode.velocity = 6
+                    gamemode.velocity = 4
                     gameloop()
-                elif event.key == pygame.K_KP3:
-                    gamemode.fps = 90
-                    gamemode.velocity = 8
-                    gameloop()
-                elif event.key == pygame.K_1:
-                    gamemode.fps = 90
-                    gamemode.velocity = 2
-                    gameloop()
-                elif event.key == pygame.K_2:
-                    gamemode.fps = 90
-                    gamemode.velocity = 6
-                    gameloop()
-                elif event.key == pygame.K_3:
+                elif event.key == pygame.K_KP3 or event.key == pygame.K_3:
                     gamemode.fps = 90
                     gamemode.velocity = 8
                     gameloop()
@@ -230,17 +305,26 @@ def gamemode():
         clock.tick(60)
 
 
-def welcome():
+def welcome():  # welcome window
 
     exit_game = False
+    n_width = 300
 
-    while not exit_game:
+    while not exit_game: # as previous mentioned
+
         gameWindow.blit(play_game_i, (0, 0))
-        text_screen("Welcome", yellow, 370, 20)
-        text_screen(user_id.uname, white, 170, 80)
 
-        for event in pygame.event.get():
+        # to set player name in right position
+        if int(player_id.p_n_len) < 9:
+            n_width = 300 - (int(player_id.p_n_len)) + 60
+        elif int(player_id.p_n_len) < 15 and int(player_id.p_n_len) > 9:
+            n_width = 300 - (int(player_id.p_n_len)) + 25
+        elif int(player_id.p_n_len) > 15 and int(player_id.p_n_len) < 22:
+            n_width = 240 - int(player_id.p_n_len)
+        text_screen(player_id.pname, green, n_width, 70)
+        text_screen("Welcome", yellow, 380, 20)
 
+        for event in pygame.event.get():  # various events called in
             if event.type == pygame.QUIT:
                 exit_game = True
                 pygame.quit()
@@ -262,8 +346,9 @@ def welcome():
         clock.tick(60)
 
 
-def gameloop():
+def gameloop():  # main game play goes here
 
+    # various local variables
     exit_game = False
     game_over = False
     snake_x = 45
@@ -273,13 +358,14 @@ def gameloop():
     snk_list = []
     snk_length = 1
 
+    # if file not exist it will make and store  hiscore in a variable
     if(not os.path.exists("hiscore.txt")):
         with open("hiscore.txt", "w") as f:
             f.write("0")
-
     with open("hiscore.txt", "r") as f:
         gameloop.hiscore = f.read()
 
+    # making food for snake
     food_x = random.randint(20, screen_width / 2)
     food_y = random.randint(20, screen_height / 2)
     gameloop.score = 0
@@ -289,22 +375,29 @@ def gameloop():
 
     while not exit_game:
 
-        if game_over:
-
+        if game_over:  # we handle game over process here  and give score with personal message
             with open("hiscore.txt", "w") as f:
                 f.write(str(gameloop.hiscore))
                 gameWindow.blit(game_over_i,(0, 0))
                 pygame.draw.rect(gameWindow, blue, [30, 35, 250, 60])
                 pygame.draw.rect(gameWindow, green, [582, 35, 300, 60])
                 text_screen("Score: " + str(gameloop.score) + " " *40 + "Hiscore: "+str(gameloop.hiscore), white, 50, 50)
-                text_screen(user_id.uname, white, 200, 150)
-                text_screen("Y o u r ", red, 500, 190)
 
+                # player name position process
+                if int(player_id.p_n_len) < 9:
+                    n_width = 520
+                elif int(player_id.p_n_len) < 15 and int(player_id.p_n_len) > 9:
+                    n_width = 450
+                elif int(player_id.p_n_len) > 15 and int(player_id.p_n_len) < 22:
+                    n_width = 320
+                text_screen(player_id.pname, white, n_width, 130)
+                text_screen("Y o u r ", red, 550, 190)
+
+            # various event call
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit_game = True
                     quit()
-
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.mixer.music.load('wrong-answer.mp3')
@@ -312,7 +405,7 @@ def gameloop():
                         exit_game = True
                         quit()
 
-                    if event.key == pygame.K_RETURN:
+                    if event.key == pygame.K_RETURN:  # if enter key pressed it will take back to welcome window to play again
                         welcome()
         else:
 
@@ -321,13 +414,12 @@ def gameloop():
                     exit_game = True
                     quit()
 
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN: # here we handle up, down, left and right key movement
                     if event.key == pygame.K_ESCAPE:
                         pygame.mixer.music.load('wrong-answer.mp3')
                         pygame.mixer.music.play()
                         exit_game = True
                         quit()
-
                     if event.key == pygame.K_RIGHT:
                         velocity_x = init_velocity
                         velocity_y = 0
@@ -343,47 +435,56 @@ def gameloop():
                     if event.key == pygame.K_q:
                         gameloop.score +=10
 
+            # snake speed and position
             snake_x = snake_x + velocity_x
             snake_y = snake_y + velocity_y
 
-            if abs(snake_x - food_x)<6 and abs(snake_y - food_y)<6:
+            if abs(snake_x - food_x)<6 and abs(snake_y - food_y)<6:  # snake eats its food
                 gameloop.score +=10
                 food_x = random.randint(20, screen_width / 2)
                 food_y = random.randint(20, screen_height / 2)
                 snk_length +=5
 
-                if gameloop.score>int(gameloop.hiscore):
+                if int(gameloop.score)>int(gameloop.hiscore):  # score and hiscore
                     gameloop.hiscore = gameloop.score
 
+            # main game window message like score, hiscore and player name
             gameWindow.blit(bg_image,(0,0))
             text_screen("Score: " + str(gameloop.score) + "  Hiscore: "+str(gameloop.hiscore), red, 5, 5)
-            text_screen("-" * 35 , red, 5, 25)
+            text_screen("Player : "+ str(player_id.pname)+" ", red, 5,550)
             pygame.draw.rect(gameWindow, aqua, [food_x, food_y, snake_size, snake_size])
 
+            # snake head making process
             head = []
             head.append(snake_x)
             head.append(snake_y)
             snk_list.append(head)
 
+            # controlling snake length
             if len(snk_list)>snk_length:
                 del snk_list[0]
 
+            # controlling snake movement in right way, not itself
             if head in snk_list[:-1]:
                 game_over = True
                 pygame.mixer.music.load('gameover.mp3')
                 pygame.mixer.music.play()
 
+            # controlling if snake moves away from game window
             if snake_x<0 or snake_x>screen_width or snake_y<0 or snake_y>screen_height:
                 pygame.mixer.music.load('gameover.mp3')
                 pygame.mixer.music.play()
                 game_over = True
 
+            # plotting snake with its variables
             plot_snake(gameWindow, white, snk_list, snake_size)
+
+        # updating display and clock
         pygame.display.update()
         clock.tick(fps)
-
+    # quit the game
     pygame.quit()
     quit()
 
-user_id()
-welcome()
+player_id() # player name function runs from here to start the game
+# Classic Snake Game code ends here
