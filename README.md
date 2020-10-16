@@ -1,7 +1,7 @@
 # Classic_Snake_Game_by_PSC
 Classic Snake Game
 ----
-<img align='right' src="https://media.giphy.com/media/KGBbCeEjz1ot4ke3CN/giphy.gif" width="230"> -->
+<img align='right' src="https://media.giphy.com/media/XISNjIMlDf9OcRr1fO/giphy.gif" width="230"> -->
 
 ----
 Hi There..
