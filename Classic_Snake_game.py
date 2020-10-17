@@ -1,4 +1,3 @@
-# Date - 17Oct2020 02:40PM  Coder - Praveen Singh Chauhan     Credit - Mohd.Haris ALi Khan AKA Harry from Code with Harry and Rohan Das 
 # import various module
 import pygame
 import random
@@ -45,10 +44,11 @@ p_name_id = pygame.transform.scale(p_name_id, (screen_width, screen_height)).con
 pygame.display.set_caption("CLASSIC SNAKE GAME V4.4 by Praveen Singh Chauhan")
 pygame.display.update()
 clock = pygame.time.Clock()
-font = pygame.font.SysFont(None, 55)
+
 
 
 def text_screen(text, color, x, y):  # every time when we want to put text in screen we use this
+    font = pygame.font.SysFont(None, 50)
     screen_text = font.render(text, True, color)
     gameWindow.blit(screen_text, [x,y])
 
@@ -361,12 +361,19 @@ def gamemode():  # it lets player to play game in various mode (basically three 
     # various checking to get right position of player name in game window
     if int(player_id.p_n_len) < 9:
         n_width = 500- (int(player_id.p_n_len))+80
+        r_width_start = 550
+        r_width_end = 220
     elif int(player_id.p_n_len) < 15 and int(player_id.p_n_len) > 9:
+        r_width_start = 500
+        r_width_end = 360
         n_width = 500- (int(player_id.p_n_len))+50
     elif int(player_id.p_n_len) > 15 and int(player_id.p_n_len) < 22:
+        r_width_start = 350
+        r_width_end = 530
         n_width = 500 - (int(player_id.p_n_len) * 6)
-    text_screen(player_id.pname, green, n_width, 480)
-    text_screen("P l a y e r ", white,580, 420)
+    pygame.draw.rect(gameWindow, red, [r_width_start, 465, r_width_end, 60])
+    text_screen(player_id.pname, yellow, n_width, 480)
+    text_screen("P l a y e r ", white,590, 420)
 
     while not exit_game:  # loop to get right mode and exit
         # event call in
@@ -425,6 +432,7 @@ def welcome():  # welcome window
             n_width = 300 - (int(player_id.p_n_len)) + 25
         elif int(player_id.p_n_len) > 15 and int(player_id.p_n_len) < 22:
             n_width = 240 - int(player_id.p_n_len)
+
         text_screen(player_id.pname, green, n_width, 70)
         text_screen("Welcome", yellow, 380, 20)
 
@@ -473,9 +481,7 @@ def gameloop():  # main game play goes here
     if(not os.path.exists("hiscore.txt")):
         with open("hiscore.txt", "w") as f:
             f.write("0")
-    elif os.path.exists("hiscore.txt"):
-        with open("hiscore.txt", "w") as f:
-            f.write("0")
+
     with open("hiscore.txt", "r") as f:
         gameloop.hiscore = f.read()
 
@@ -495,7 +501,8 @@ def gameloop():  # main game play goes here
                 gameWindow.blit(game_over_i,(0, 0))
                 pygame.draw.rect(gameWindow, blue, [30, 35, 250, 60])
                 pygame.draw.rect(gameWindow, green, [582, 35, 300, 60])
-                text_screen("Score: " + str(gameloop.score) + " " *40 + "Hiscore: "+str(gameloop.hiscore), white, 50, 50)
+                text_screen("Score: " + str(gameloop.score) , white, 50, 50)
+                text_screen("Hiscore: "+str(gameloop.hiscore), white, 590, 50)
 
                 # player name position process
                 if int(player_id.p_n_len) < 9:
@@ -512,15 +519,19 @@ def gameloop():  # main game play goes here
                 if event.type == pygame.QUIT:
                     pygame.mixer.music.load('wrong-answer.mp3')
                     pygame.mixer.music.play()
+                    with open("hiscore.txt", "w") as f:
+                        f.write(str(gameloop.hiscore))
                     exit_game = True
-                    pygame.quit()
-                    quit()
+                    # pygame.quit()
+                    # quit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.mixer.music.load('wrong-answer.mp3')
                         pygame.mixer.music.play()
+                        with open("hiscore.txt", "w") as f:
+                            f.write(str(gameloop.hiscore))
                         exit_game = True
-                        quit()
+                        # quit()
 
                     if event.key == pygame.K_RETURN:  # if enter key pressed it will take back to welcome window to play again
                         pygame.mixer.music.load('key_press.mp3')
@@ -532,6 +543,8 @@ def gameloop():  # main game play goes here
                 if event.type == pygame.QUIT:
                     pygame.mixer.music.load('wrong-answer.mp3')
                     pygame.mixer.music.play()
+                    with open("hiscore.txt", "w") as f:
+                        f.write(str(gameloop.hiscore))
                     exit_game = True
                     pygame.quit()
                     quit()
@@ -540,6 +553,8 @@ def gameloop():  # main game play goes here
                     if event.key == pygame.K_ESCAPE:
                         pygame.mixer.music.load('wrong-answer.mp3')
                         pygame.mixer.music.play()
+                        with open("hiscore.txt", "w") as f:
+                            f.write(str(gameloop.hiscore))
                         exit_game = True
                         quit()
                     if event.key == pygame.K_RIGHT:
@@ -554,8 +569,8 @@ def gameloop():  # main game play goes here
                     if event.key == pygame.K_DOWN:
                         velocity_y = init_velocity
                         velocity_x = 0
-                    if event.key == pygame.K_q:
-                        gameloop.score +=10
+                    # if event.key == pygame.K_q:
+                    #     gameloop.score += 10
 
                     # background music volume up and down
                     if event.key == pygame.K_u:
@@ -571,8 +586,8 @@ def gameloop():  # main game play goes here
             snake_x = snake_x + velocity_x
             snake_y = snake_y + velocity_y
 
-            if abs(snake_x - food_x)<6 and abs(snake_y - food_y)<6:  # snake eats its food
-                gameloop.score +=10
+            if abs(snake_x - food_x) < 6 and abs(snake_y - food_y)<6:  # snake eats its food
+                gameloop.score += 10
                 food_x = random.randint(20, screen_width / 2)
                 food_y = random.randint(20, screen_height / 2)
                 snk_length +=5
