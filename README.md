@@ -2,12 +2,15 @@
 Classic Snake Game
 ----
 
-<img align='right' src="https://media.giphy.com/media/nnuYT3uWUsPivMkP9h/giphy.gif" width="230"> -->
+<img align='right' src="https://media.giphy.com/media/XISNjIMlDf9OcRr1fO/giphy.gif" width="230"> -->
 
 ----
 Hi There..
-this is a classic game of snake, you can enjoy .. i made three mode 
-You can shoose GAME MODE like Slow, Medium and Fast by Pressing 1 , 2 or 3
-its more interective and personalized 
+This is Classic Snake Game V4.4 . 
+You will find Play Mode or Game Mode for Fast, Medium or Slow speed play.
+You can listen music while playing , you can mute, unmute, music up and down also.
+Various personalization along with asking Player's name and according the same it will gives messages all the time.
+Work hard to achive this perfection because i spent hrs and hrs to design, perfection, coding and making it fun game.
+Please play and EMJOY
 try it NOW
 ----
