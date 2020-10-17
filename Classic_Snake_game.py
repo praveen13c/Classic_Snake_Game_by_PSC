@@ -1,3 +1,4 @@
+# Date - 17Oct2020 02:40PM  Coder - Praveen Singh Chauhan     Credit - Mohd.Haris ALi Khan AKA Harry from Code with Harry and Rohan Das 
 # import various module
 import pygame
 import random
@@ -41,7 +42,7 @@ p_name_id = pygame.image.load("player_name.jpg")
 p_name_id = pygame.transform.scale(p_name_id, (screen_width, screen_height)).convert_alpha()
 
 # Game Title
-pygame.display.set_caption("CLASSIC SNAKE GAME V4.0 by Praveen Singh Chauhan")
+pygame.display.set_caption("CLASSIC SNAKE GAME V4.4 by Praveen Singh Chauhan")
 pygame.display.update()
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 55)
