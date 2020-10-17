@@ -2,8 +2,7 @@
 
 ![](https://visitor-badge.glitch.me/badge?page_id=praveen13c)  
 
-<!-- <img align='right' src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="230"> -->
-<img align='right' src="https://media.giphy.com/media/2zeji2UedvZzvIZ45N/giphy.gif" width="230">
+<!-- <img align='right' src="https://media.giphy.com/media/XISNjIMlDf9OcRr1fO/giphy.gif" width="230"> -->
 
 I'm Creative, Techie and Now a Developer too... who loves to create. 
 
