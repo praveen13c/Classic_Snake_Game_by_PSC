@@ -1,3 +1,6 @@
+# Game = Classic Snake Game     Coder =  Praveen Singh Chauhan       Date & Time = 17/10/2020 11:00PM
+# Credit = Mohd. Haris Ali Khan (Harry from Code with Harry) and Rohan Das
+
 # import various module
 import pygame
 import random
