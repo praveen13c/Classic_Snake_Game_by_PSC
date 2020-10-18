@@ -10,7 +10,7 @@ I'm Creative, Techie and Now a Developer too... who loves to create.
 Classic Snake Game
 ----
 
-<img align='right' src="https://media.giphy.com/media/XISNjIMlDf9OcRr1fO/giphy.gif" width="230"> -->
+<img align='right' src="https://media.giphy.com/media/nnuYT3uWUsPivMkP9h/giphy.gif" width="230"> -->
 
 ----
 Game Features and some general information 
